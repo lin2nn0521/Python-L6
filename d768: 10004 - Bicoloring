@@ -1,0 +1,33 @@
+from collections import deque
+while True:
+    n = int(input())
+    if n == 0 : break
+    m = int(input())
+    start = 0
+    graph = []
+    queue = deque([start])
+    visited = []
+    color = []
+    result = "BICOLORABLE."
+    for _ in range(n):
+        graph.append([])
+        color.append([1])
+        visited.append(False)
+    while m > 0:
+        x, y = map(int, input().split())
+        graph[x].append(y)
+        graph[y].append(x)
+        m -= 1
+    visited[start] = True
+    while queue:
+        for i in graph[queue[0]] :
+            if visited[i] == True:
+                if color[i] == color[queue[0]]:
+                    result = "NOT BICOLORABLE."
+            if visited[i] == False:
+                if color[i] == color[queue[0]]:
+                    color[i] = 0
+                queue.append(i)
+                visited[i] = True
+        queue.popleft()
+    print(result)
